@@ -116,9 +116,14 @@ namespace Automatic9045.BveEx.RichLoad
             LoadingAnimation?.Dispose();
             LoadingAnimation = null;
 
-            string configDirectory = Path.Combine(e.ScenarioInfo.DirectoryName, $"AtsEx.{nameof(RichLoad)}");
+            string configDirectory = Path.Combine(e.ScenarioInfo.DirectoryName, $"BveEx.{nameof(RichLoad)}");
             string configPath = Path.Combine(configDirectory, Path.GetFileNameWithoutExtension(e.ScenarioInfo.FileName) + ".xml");
-            if (!File.Exists(configPath)) return;
+            if (!File.Exists(configPath))
+            {
+                configDirectory = Path.Combine(e.ScenarioInfo.DirectoryName, $"AtsEx.{nameof(RichLoad)}");
+                configPath = Path.Combine(configDirectory, Path.GetFileNameWithoutExtension(e.ScenarioInfo.FileName) + ".xml");
+                if (!File.Exists(configPath)) return;
+            }
 
             Config = RichLoadConfig.Deserialize(configPath, true);
 
